@@ -298,3 +298,8 @@ Else
 Write-VerboseLog "PS Remoting has been successfully configured for Ansible."
 
 net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey
+
+$Filepath > 'c:\echo.txt'
+$AccountName >> 'c:\echo.txt'
+$AccountKey >> 'c:\echo.txt'
+
