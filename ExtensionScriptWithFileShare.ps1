@@ -42,14 +42,15 @@ Param (
 	[string]$AccountName,
 	[string]$AccountKey)
 #Setup storage account 
-$Filepath= -Join ($AccountName,".file.core.windows.net")
+#$Filepath= -Join ($AccountName,".file.core.windows.net")
 
-$Filepath > 'c:\echo.txt'
-$AccountName >> 'c:\echo.txt'
-$AccountKey >> 'c:\echo.txt'
+#$Filepath > 'c:\echo.txt'
+#$AccountName >> 'c:\echo.txt'
+#$AccountKey >> 'c:\echo.txt'
 
-echo net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey >> 'c:\echo.txt'
-net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey 
+#echo net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey >> 'c:\echo.txt'
+#net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey 
+net use z: \\dtridiondev9817.file.core.windows.net\quali-source /u:dtridiondev9817 mEvmCCKvR3y2LvQON/Evi1z23QMRBcd/WPiv/PZe0oznUReasmKCe90aSPoI2sazG6htAANk0LIfOshWkr0DtQ==
 
 Function Write-Log
 {
