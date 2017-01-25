@@ -50,7 +50,9 @@ Param (
 
 #echo net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey >> 'c:\echo.txt'
 #net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey 
-net use z: \\dtridiondev9817.file.core.windows.net\quali-source /u:dtridiondev9817 mEvmCCKvR3y2LvQON/Evi1z23QMRBcd/WPiv/PZe0oznUReasmKCe90aSPoI2sazG6htAANk0LIfOshWkr0DtQ==
+cmdkey /add:dtridiondev9817.file.core.windows.net /user:dtridiondev9817 /pass:mEvmCCKvR3y2LvQON/Evi1z23QMRBcd/WPiv/PZe0oznUReasmKCe90aSPoI2sazG6htAANk0LIfOshWkr0DtQ==
+
+net use z: \\dtridiondev9817.file.core.windows.net\quali-source 
 
 Function Write-Log
 {
