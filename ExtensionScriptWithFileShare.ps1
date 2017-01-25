@@ -40,7 +40,7 @@ Param (
     $CreateSelfSignedCert = $true,
     [switch]$ForceNewSSLCert,
 	[string]$AccountName,
-	string]$AccountKey)
+	[string]$AccountKey)
 #Setup storage account 
 $Filepath= -Join ($AccountName,".file.core.windows.net")
 
