@@ -40,7 +40,7 @@ Param (
     $CreateSelfSignedCert = $true,
     [switch]$ForceNewSSLCert
       )
-      
+
 #Setup storage account 
 
 Function Write-Log
@@ -170,6 +170,10 @@ Else
     Write-Verbose "PS Remoting is already enabled."
 }
 
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+
+winrm set winrm/config/service @{AllowUnencrypted="true"}
+
 # Make sure there is a SSL listener.
 $listeners = Get-ChildItem WSMan:\localhost\Listener
 If (!($listeners | Where {$_.Keys -like "TRANSPORT=HTTPS"}))
@@ -294,9 +298,6 @@ Else
 }
 Write-VerboseLog "PS Remoting has been successfully configured for Ansible."
 
-netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-
-winrm set winrm/config/service @{AllowUnencrypted="true"}
 
 
 
