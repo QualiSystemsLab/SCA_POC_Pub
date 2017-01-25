@@ -48,7 +48,8 @@ $Filepath > 'c:\echo.txt'
 $AccountName >> 'c:\echo.txt'
 $AccountKey >> 'c:\echo.txt'
 
-net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey
+echo net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey >> 'c:\echo.txt'
+net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey 
 
 Function Write-Log
 {
