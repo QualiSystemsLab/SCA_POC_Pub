@@ -49,10 +49,10 @@ Param (
 #$AccountKey >> 'c:\echo.txt'
 
 #echo net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey >> 'c:\echo.txt'
+cmdkey /add:$AccountName.file.core.windows.net /user:$AccountName /pass:$AccountKey
 #net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey 
-cmdkey /add:dtridiondev9817.file.core.windows.net /user:dtridiondev9817 /pass:mEvmCCKvR3y2LvQON/Evi1z23QMRBcd/WPiv/PZe0oznUReasmKCe90aSPoI2sazG6htAANk0LIfOshWkr0DtQ==
 
-net use z: \\dtridiondev9817.file.core.windows.net\quali-source 
+net use z: \\$Filepath\quali-source 
 
 Function Write-Log
 {
