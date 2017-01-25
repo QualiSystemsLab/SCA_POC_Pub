@@ -38,21 +38,10 @@ Param (
     [int]$CertValidityDays = 365,
     [switch]$SkipNetworkProfileCheck,
     $CreateSelfSignedCert = $true,
-    [switch]$ForceNewSSLCert,
-	[string]$AccountName,
-	[string]$AccountKey)
+    [switch]$ForceNewSSLCert
+      )
+      
 #Setup storage account 
-#$Filepath= -Join ($AccountName,".file.core.windows.net")
-
-#$Filepath > 'c:\echo.txt'
-#$AccountName >> 'c:\echo.txt'
-#$AccountKey >> 'c:\echo.txt'
-
-#echo net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey >> 'c:\echo.txt'
-cmdkey /add:$AccountName.file.core.windows.net /user:$AccountName /pass:$AccountKey
-#net use z: \\$Filepath\quali-source /u:$AccountName $AccountKey 
-
-net use z: \\$Filepath\quali-source 
 
 Function Write-Log
 {
@@ -304,6 +293,10 @@ Else
     Throw "Unable to establish an HTTP or HTTPS remoting session."
 }
 Write-VerboseLog "PS Remoting has been successfully configured for Ansible."
+
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+
+winrm set winrm/config/service @{AllowUnencrypted="true"}
 
 
 
