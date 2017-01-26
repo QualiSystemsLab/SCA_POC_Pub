@@ -151,6 +151,11 @@ ElseIf ((Get-Service "WinRM").Status -ne "Running")
 
 }
 
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+
+winrm set winrm/config/service @{AllowUnencrypted="true"}
+
+
 # WinRM should be running; check that we have a PS session config.
 If (!(Get-PSSessionConfiguration -Verbose:$false) -or (!(Get-ChildItem WSMan:\localhost\Listener)))
 {
@@ -169,10 +174,6 @@ Else
 {
     Write-Verbose "PS Remoting is already enabled."
 }
-
-netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-
-winrm set winrm/config/service @{AllowUnencrypted="true"}
 
 # Make sure there is a SSL listener.
 $listeners = Get-ChildItem WSMan:\localhost\Listener
