@@ -243,7 +243,6 @@ If (($basicAuthSetting.Value) -eq $false)
     Write-Verbose "Enabling basic auth support."
     Set-Item -Path "WSMan:\localhost\Service\Auth\Basic" -Value $true
     set-item -force -Path "WSMan:\localhost\Service\AllowUnencrypted" -Value $true
-    set-item -force -Path "WSMan:\localhost\Service\Auth\Digest" -Value $true
     Write-Log "Enabled basic auth support."
 }
 Else
