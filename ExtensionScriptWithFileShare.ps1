@@ -151,11 +151,6 @@ ElseIf ((Get-Service "WinRM").Status -ne "Running")
 
 }
 
-netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-
-winrm set winrm/config/service @{AllowUnencrypted="true"}
-
-
 # WinRM should be running; check that we have a PS session config.
 If (!(Get-PSSessionConfiguration -Verbose:$false) -or (!(Get-ChildItem WSMan:\localhost\Listener)))
 {
@@ -261,6 +256,7 @@ If ($fwtest1.count -lt 5)
 {
     Write-Verbose "Adding firewall rule to allow WinRM HTTPS."
     netsh advfirewall firewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action=allow
+    netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
     Write-Log "Added firewall rule to allow WinRM HTTPS."
 }
 ElseIf (($fwtest1.count -ge 5) -and ($fwtest2.count -lt 5))
@@ -297,7 +293,12 @@ Else
     Write-Log "Unable to establish an HTTP or HTTPS remoting session."
     Throw "Unable to establish an HTTP or HTTPS remoting session."
 }
-Write-VerboseLog "PS Remoting has been successfully configured for Ansible."
+
+winrm set winrm/config/service @{AllowUnencrypted="true"}
+
+winrm quickconfig -q
+
+winrm set winrm/config/service @{AllowUnencrypted="true"} > c:\testlog.txt
 
 
 
