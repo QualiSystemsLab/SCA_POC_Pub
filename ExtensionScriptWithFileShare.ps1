@@ -242,6 +242,8 @@ If (($basicAuthSetting.Value) -eq $false)
 {
     Write-Verbose "Enabling basic auth support."
     Set-Item -Path "WSMan:\localhost\Service\Auth\Basic" -Value $true
+    set-item -force WSMan:\localhost\Service\AllowUnencrypted $true
+    set-item -force WSMan:\localhost\Service\Auth\Digest $true
     Write-Log "Enabled basic auth support."
 }
 Else
@@ -297,8 +299,6 @@ Else
 winrm set winrm/config/service @{AllowUnencrypted="true"}
 
 winrm quickconfig -q
-
-winrm set winrm/config/service @{AllowUnencrypted="true"} > c:\testlog.txt
 
 
 
