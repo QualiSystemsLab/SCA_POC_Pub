@@ -40,7 +40,7 @@ Param (
     $CreateSelfSignedCert = $true,
     [switch]$ForceNewSSLCert
       )
-
+      
 #Setup storage account 
 
 Function Write-Log
@@ -242,7 +242,6 @@ If (($basicAuthSetting.Value) -eq $false)
 {
     Write-Verbose "Enabling basic auth support."
     Set-Item -Path "WSMan:\localhost\Service\Auth\Basic" -Value $true
-    set-item -force -Path "WSMan:\localhost\Service\AllowUnencrypted" -Value $true
     Write-Log "Enabled basic auth support."
 }
 Else
@@ -257,7 +256,7 @@ If ($fwtest1.count -lt 5)
 {
     Write-Verbose "Adding firewall rule to allow WinRM HTTPS."
     netsh advfirewall firewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action=allow
-    netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
+    netsh advfirewall firewall add rule profile=any name="Allow Tridion HTTP Requests" dir=in localport=11080 protocol=TCP action=allow
     Write-Log "Added firewall rule to allow WinRM HTTPS."
 }
 ElseIf (($fwtest1.count -ge 5) -and ($fwtest2.count -lt 5))
@@ -294,11 +293,11 @@ Else
     Write-Log "Unable to establish an HTTP or HTTPS remoting session."
     Throw "Unable to establish an HTTP or HTTPS remoting session."
 }
+Write-VerboseLog "PS Remoting has been successfully configured for Ansible."
+
+netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
 
 winrm set winrm/config/service @{AllowUnencrypted="true"}
-
-winrm quickconfig -q
-
 
 
 
