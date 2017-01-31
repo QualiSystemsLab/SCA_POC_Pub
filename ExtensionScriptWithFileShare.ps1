@@ -259,6 +259,7 @@ If ($fwtest1.count -lt 5)
     netsh advfirewall firewall add rule profile=any name="Allow WinRM HTTPS" dir=in localport=5986 protocol=TCP action=allow
     netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
     netsh advfirewall firewall add rule profile=any name="Allow Tridion HTTP Requests" dir=in localport=11080 protocol=TCP action=allow
+    netsh advfirewall firewall add rule profile=any name="PSExec" dir=in localport=445 protocol=TCP action=allow
     Write-Log "Added firewall rule to allow WinRM HTTPS."
 }
 ElseIf (($fwtest1.count -ge 5) -and ($fwtest2.count -lt 5))
